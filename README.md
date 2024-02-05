@@ -1,6 +1,4 @@
-[![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
-
+# Бэкенд дипломной работы
 
 ## Директории
 
@@ -16,6 +14,7 @@
 `npm run dev` — запускает сервер с hot-reload
 
 [Ссылка на репозиторий - ветка Main](https://github.com/burlake/movies-explorer-api/tree/main)
+
 [Ссылка на репозиторий - ветка level 1](https://github.com/burlake/movies-explorer-api/tree/level-1)
 
 ## Ссылки на проект
