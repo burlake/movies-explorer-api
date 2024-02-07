@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const httpConstants = require('http2').constants;
-const Card = require('../models/card');
+const Movie = require('../models/movie');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/ForbiddenError');
@@ -9,13 +9,12 @@ module.exports.addMovie = (req, res, next) => { //было addCard + name, link
   const { country, director, duration, year, description, image, trailerLink, thumbnail, owner, movieId, nameRU, nameEN } = req.body;
   Movie.create({ country, director, duration, year, description, image, trailerLink, thumbnail, owner, movieId, nameRU, nameEN, owner: req.user._id }) //Card + name, link
     .then((card) => {
-      Card.findById(card)
+      Movie.findById(card)
         .orFail()
-        .populate('owner')
         .then((data) => res.status(httpConstants.HTTP_STATUS_CREATED).send(data))
         .catch((err) => {
           if (err instanceof mongoose.Error.DocumentNotFoundError) {
-            next(new NotFoundError('Карточки с таким id нет'));
+            next(new NotFoundError('Фильма с таким id нет - module.exports.addMovie'));
           } else {
             next(err);
           }
@@ -31,20 +30,20 @@ module.exports.addMovie = (req, res, next) => { //было addCard + name, link
 };
 
 module.exports.getCards = (req, res, next) => {
-  Card.find({}).sort({ createdAt: -1 })
+  Movie.find({}).sort({ createdAt: -1 })
     .populate(['owner', 'likes'])
     .then((cards) => res.status(200).send(cards))
     .catch(next);
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  Card.findById(req.params.cardId)
+  Movie.findById(req.params.cardId)
     .orFail()
     .then((card) => {
       if (!card.owner.equals(req.user._id)) {
         throw new ForbiddenError('Карточка другого пользователя'); // 403
       }
-      Card.deleteOne(card)
+      Movie.deleteOne(card)
         .orFail()
         .then(() => {
           res.status(httpConstants.HTTP_STATUS_OK).send({ message: 'Карточка удалена' });
@@ -69,7 +68,7 @@ module.exports.deleteCard = (req, res, next) => {
 };
 
 module.exports.likeCard = (req, res, next) => {
-  Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
+  Movie.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
     .orFail()
     .populate(['owner', 'likes'])
     .then((card) => {
@@ -87,7 +86,7 @@ module.exports.likeCard = (req, res, next) => {
 };
 
 module.exports.dislikeCard = (req, res, next) => {
-  Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
+  Movie.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
     .orFail()
     .populate(['owner', 'likes'])
     .then((card) => {

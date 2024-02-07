@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const cardSchema = new mongoose.Schema({
+const movieSchema = new mongoose.Schema({ //cardSchema
   name: {
-    type: String,
+    type: String, //надо переделать схему
     required: {
       value: true,
       message: 'Поле является обязательным',
@@ -43,4 +43,4 @@ const cardSchema = new mongoose.Schema({
   },
 }, { versionKey: false, timestamps: true });
 
-module.exports = mongoose.model('card', cardSchema);
+module.exports = mongoose.model('card', movieSchema); //cardSchema
