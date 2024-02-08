@@ -1,7 +1,7 @@
 {
   "name": "diploma",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Директории",
   "main": "index.js",
   "scripts": {
     "lint": "npx eslint .",
@@ -32,5 +32,6 @@
     "mongoose": "^8.0.0",
     "validator": "^13.11.0",
     "winston": "^3.11.0"
-  }
+  },
+  "keywords": []
 }

@@ -1,77 +1,56 @@
 const mongoose = require('mongoose');
-const { isURL } = require('validator');
+const validator = require('validator');
 
 const movieSchema = new mongoose.Schema({
   country: {
     type: String,
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
   },
   director: {
     type: String,
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
   },
   duration: {
     type: String,
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
   },
   year: {
     type: String,
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
   },
   description: {
     type: String,
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
   },
   image: {
     type: String,
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
     validate: {
       validator(v) {
-        return /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(v);
+        //return /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(v);
+        return validator.isURL(v);
       },
       message: 'Поле image обязательно должно быть в URL формате',
     },
   },
   trailerLink: {
     type: String,
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
     validate: {
       validator(v) {
-        return /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(v);
+        //return /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(v);
+        return validator.isURL(v);
       },
       message: 'Поле trailerLink обязательно должно быть в URL формате',
     },
   },
   thumbnail: {
     type: String,
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
     validate: {
       validator(v) {
-        return /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(v);
+        //return /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(v);
+        return validator.isURL(v);
       },
       message: 'Поле thumbnail обязательно должно быть в URL формате',
     },
@@ -79,31 +58,19 @@ const movieSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
   },
   movieId: {
     type: Number,
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
   },
   nameRU: {
     type: String,
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
   },
   nameEN: {
     type: String,
-    required: {
-      value: true,
-      message: 'Поле является обязательным',
-    },
+    required: true,
   }
 }, { versionKey: false, timestamps: true });
 

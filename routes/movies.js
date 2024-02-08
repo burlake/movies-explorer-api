@@ -1,12 +1,12 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 const {
-  addMovie, getMovies, deleteMovie, likeMovie, dislikeMovie,
+  addMovie, getMovies, deleteMovie,
 } = require('../controllers/movies');
 
-router.get('/', getMovies);
+router.get('/', getMovies); //работает
 
-router.post('/', celebrate({
+router.post('/', celebrate({ //работает
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
@@ -22,23 +22,23 @@ router.post('/', celebrate({
   }),
 }), addMovie);
 
-router.delete('/:movieId', celebrate({
+router.delete('/:movieId', celebrate({ //работает
   params: Joi.object().keys({
-    movieId: Joi.string().min(24).max(24),
+    movieId: Joi.string().min(24).max(24).hex().required(),
   }),
 }), deleteMovie);
 
-router.put('/:movieId/likes', celebrate({
-  params: Joi.object().keys({
-    movieId: Joi.string().min(24).max(24),
-  }),
-}), likeMovie);
+// router.put('/:movieId/likes', celebrate({
+//   params: Joi.object().keys({
+//     movieId: Joi.string().min(24).max(24),
+//   }),
+// }), likeMovie);
 
-router.delete('/:movieId/likes', celebrate({
-  params: Joi.object().keys({
-    movieId: Joi.string().min(24).max(24),
-  }),
-}), dislikeMovie);
+// router.delete('/:movieId/likes', celebrate({
+//   params: Joi.object().keys({
+//     movieId: Joi.string().min(24).max(24),
+//   }),
+// }), dislikeMovie);
 
 module.exports = router;
 

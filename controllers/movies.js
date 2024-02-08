@@ -30,7 +30,7 @@ module.exports.addMovie = (req, res, next) => { //было addCard + name, link
 };
 
 module.exports.getMovies = (req, res, next) => {
-  Movie.find({}).sort({ createdAt: -1 })
+  Movie.find({ owner: req.user._id })
     .then((cards) => res.status(200).send(cards))
     .catch(next);
 };

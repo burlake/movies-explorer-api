@@ -4,9 +4,9 @@ const {
   getUserMe, getUserById, editUserData
 } = require('../controllers/users');
 
-router.get('/me', getUserMe); // GET /users/me - возвращает информацию о текущем пользователе
+router.get('/me', getUserMe); // работает
 
-router.get('/:userId', celebrate({
+router.get('/:userId', celebrate({ // работает
   params: Joi.object().keys({
     userId: Joi.string().min(24).max(24),
   }),
