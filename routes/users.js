@@ -1,10 +1,9 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 const {
-  getUsers, getUserMe, getUserById, editUserData, editUserAvatar,
+  getUserMe, getUserById, editUserData
 } = require('../controllers/users');
 
-router.get('/', getUsers);
 router.get('/me', getUserMe); // GET /users/me - возвращает информацию о текущем пользователе
 
 router.get('/:userId', celebrate({
@@ -16,14 +15,8 @@ router.get('/:userId', celebrate({
 router.patch('/me', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
+    email: Joi.string().required().pattern(/^\S+@\S+\.\S+$/),
   }),
 }), editUserData);
-
-router.patch('/me/avatar', celebrate({
-  body: Joi.object().keys({
-    avatar: Joi.string().pattern(/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/),
-  }),
-}), editUserAvatar);
 
 module.exports = router;

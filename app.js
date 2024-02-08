@@ -12,7 +12,7 @@ const { limiter } = require('./utils/constants');
 // const auth = require('./middlewares/auth');
 // const rateLimit = require('express-rate-limit');
 
-const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/backmoviesdb' } = process.env;
 
 const app = express();
 

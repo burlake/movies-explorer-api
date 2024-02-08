@@ -29,15 +29,14 @@ module.exports.addMovie = (req, res, next) => { //было addCard + name, link
     });
 };
 
-module.exports.getCards = (req, res, next) => {
+module.exports.getMovies = (req, res, next) => {
   Movie.find({}).sort({ createdAt: -1 })
-    .populate(['owner', 'likes'])
     .then((cards) => res.status(200).send(cards))
     .catch(next);
 };
 
-module.exports.deleteCard = (req, res, next) => {
-  Movie.findById(req.params.cardId)
+module.exports.deleteMovie = (req, res, next) => {
+  Movie.findById(req.params.movieId)
     .orFail()
     .then((card) => {
       if (!card.owner.equals(req.user._id)) {
@@ -68,9 +67,8 @@ module.exports.deleteCard = (req, res, next) => {
 };
 
 module.exports.likeCard = (req, res, next) => {
-  Movie.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
+  Movie.findByIdAndUpdate(req.params.movieId, { $addToSet: { likes: req.user._id } }, { new: true })
     .orFail()
-    .populate(['owner', 'likes'])
     .then((card) => {
       res.status(httpConstants.HTTP_STATUS_OK).send(card);
     })
@@ -86,9 +84,8 @@ module.exports.likeCard = (req, res, next) => {
 };
 
 module.exports.dislikeCard = (req, res, next) => {
-  Movie.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
+  Movie.findByIdAndUpdate(req.params.movieId, { $pull: { likes: req.user._id } }, { new: true })
     .orFail()
-    .populate(['owner', 'likes'])
     .then((card) => {
       res.status(httpConstants.HTTP_STATUS_OK).send(card);
     })

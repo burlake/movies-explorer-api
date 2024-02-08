@@ -37,8 +37,8 @@ module.exports.getUserById = (req, res, next) => {
 // В случае если ошибка непредвиденная, надо возвращать 500
 
 module.exports.editUserData = (req, res, next) => {
-  const { name, about } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about }, { new: 'true', runValidators: true })
+  const { name, mail } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, mail }, { new: 'true', runValidators: true })
     .orFail()
     .then((user) => {
       res.status(httpConstants.HTTP_STATUS_OK).send(user);
@@ -71,16 +71,16 @@ module.exports.editUserAvatar = (req, res, next) => {
 
 module.exports.addUser = (req, res, next) => {
   const {
-    name, about, avatar, email, password,
+    name, email, password,
   } = req.body;
   bcrypt.hash(password, 10)
   // User.create({ name, about, avatar })
     .then((hash) => User.create({
-      name, about, avatar, email, password: hash,
+      name, email, password: hash,
       // res.status(httpConstants.HTTP_STATUS_CREATED).send(user);
     })
       .then((user) => res.status(httpConstants.HTTP_STATUS_CREATED).send({ // 201 - создан
-        name: user.name, about: user.about, avatar: user.avatar, _id: user._id, email: user.email,
+        name: user.name, _id: user._id, email: user.email,
       }))
       .catch((err) => {
         if ((err.code === 11000)) {
