@@ -5,9 +5,34 @@ const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/ForbiddenError');
 
-module.exports.addMovie = (req, res, next) => { //было addCard + name, link
-  const { country, director, duration, year, description, image, trailerLink, thumbnail, owner, movieId, nameRU, nameEN } = req.body;
-  Movie.create({ country, director, duration, year, description, image, trailerLink, thumbnail, owner, movieId, nameRU, nameEN, owner: req.user._id }) //Card + name, link
+module.exports.addMovie = (req, res, next) => { // было addCard + name, link
+  const {
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
+  } = req.body;
+  Movie.create({
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
+    owner: req.user._id,
+  })
     .then((card) => {
       Movie.findById(card)
         .orFail()

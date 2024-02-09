@@ -27,7 +27,6 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        //return /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(v);
         return validator.isURL(v);
       },
       message: 'Поле image обязательно должно быть в URL формате',
@@ -38,7 +37,6 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        //return /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(v);
         return validator.isURL(v);
       },
       message: 'Поле trailerLink обязательно должно быть в URL формате',
@@ -49,7 +47,6 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        //return /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(v);
         return validator.isURL(v);
       },
       message: 'Поле thumbnail обязательно должно быть в URL формате',
@@ -71,7 +68,7 @@ const movieSchema = new mongoose.Schema({
   nameEN: {
     type: String,
     required: true,
-  }
+  },
 }, { versionKey: false, timestamps: true });
 
 module.exports = mongoose.model('card', movieSchema);
