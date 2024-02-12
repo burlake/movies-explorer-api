@@ -37,17 +37,19 @@ module.exports.getUserById = (req, res, next) => {
 // В случае если ошибка непредвиденная, надо возвращать 500
 
 module.exports.editUserData = (req, res, next) => {
-  const { name, mail } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, mail }, { new: 'true', runValidators: true })
+  const { name, email } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, email }, { new: 'true', runValidators: true })
     .orFail()
     .then((user) => {
       res.status(httpConstants.HTTP_STATUS_OK).send(user);
     })
     .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
+      if (err.code === 11000) {
+        next(new ConflictError(`Пользователь с этой почтой ${email} уже зарегистрирован`));
+      } else if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequestError(err.message));
       } else if (err instanceof mongoose.Error.DocumentNotFoundError) {
-        next(new NotFoundError('Произошла ошибка. Пользователь с id не найден'));
+        next(new NotFoundError('Произошла ошибка. Пользователь с id не найден.'));
       } else {
         next(err);
       }
